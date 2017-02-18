@@ -20,41 +20,11 @@
                 style="@style/FormTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Applicant" />
-
-            <EditText
-                android:id="@+id/applicantName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_design"
-                android:editable="false" />
-
-            <TextView
-                style="@style/FormTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Registration No." />
-
-            <EditText
-                android:id="@+id/registrationNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_design"
-                android:editable="false" />
-
-            <TextView
-                style="@style/FormTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="To" />
 
             <EditText
-                android:id="@+id/lettersTo"
+                android:id="@+id/lettersTo_withoutRegistrationNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -69,7 +39,7 @@
                 android:text="Subject" />
 
             <EditText
-                android:id="@+id/subject"
+                android:id="@+id/subject_withoutRegistrationNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -84,7 +54,7 @@
                 android:text="Letter" />
 
             <EditText
-                android:id="@+id/lettersContent"
+                android:id="@+id/lettersContent_withoutRegistrationNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -101,7 +71,7 @@
                 android:weightSum="2">
 
                 <Button
-                    android:id="@+id/btnDecline"
+                    android:id="@+id/btnDecline_withoutRegistrationNo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5sp"
@@ -113,7 +83,7 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btnApprove"
+                    android:id="@+id/btnApprove_withoutRegistrationNo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5sp"
