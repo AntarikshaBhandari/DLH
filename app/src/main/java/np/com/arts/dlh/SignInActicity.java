@@ -28,7 +28,7 @@ public class SignInActicity extends AppCompatActivity {
     Button loginButton;
 
     //signin
-    static String filename="mypreferencefile";
+    static String filename = "mypreferencefile";
     static String user_key = "user";
     static String pass_key = "pass";
 
@@ -41,11 +41,11 @@ public class SignInActicity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(filename,MODE_PRIVATE);
-        Boolean logic = sharedPreferences.getBoolean(state,false);
+        SharedPreferences sharedPreferences = getSharedPreferences(filename, MODE_PRIVATE);
+        Boolean logic = sharedPreferences.getBoolean(state, false);
 
-        if(logic == true){
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        if (logic == true) {
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             finish();
         }
@@ -55,7 +55,6 @@ public class SignInActicity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.btn_login);
 
 
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,12 +62,16 @@ public class SignInActicity extends AppCompatActivity {
                 usrname = username.getText().toString();
                 pass = password.getText().toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.loginUrl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
+
+                if (usrname.equals("") || pass.equals("")) {
+                    Toast.makeText(SignInActicity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
+                } else {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.loginUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
                             JSONObject login = new JSONObject(response);
-                            String loginStatus = login.getString("status");
+                            /*String loginStatus = login.getString("status");
 
                             if(loginStatus == "fail"){
                                 Toast.makeText(SignInActicity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -76,37 +79,37 @@ public class SignInActicity extends AppCompatActivity {
 
                             else {
 
+                            }*/
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        }
+                    });
 
-                    }
-                });
+                }
+                if (usrname.equals("admin") && pass.equals("admin")) {
+                    SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferencesState.edit();
+                    editor.putString(user_key,usrname);
+                    editor.putString(pass_key,pass);
+                    editor.putBoolean("state",true);
+                    editor.commit();
 
-
-//                if (usrname.equals("admin") && pass.equals("admin")) {
-//                    SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = preferencesState.edit();
-//                    editor.putString(user_key,usrname);
-//                    editor.putString(pass_key,pass);
-//                    editor.putBoolean("state",true);
-//                    editor.commit();
-//
-//                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//                else {
-//                    Toast.makeText(getApplicationContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-//                }
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
