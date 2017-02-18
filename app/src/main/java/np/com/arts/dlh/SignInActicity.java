@@ -9,26 +9,35 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignInActicity extends AppCompatActivity {
 
     EditText username, password;
-    String usrname, pass;
+    String usernameEditText, passwordEditText;
     Button loginButton;
 
     //signin
     static String filename = "mypreferencefile";
+    static String id_key = "id";
+    static String name_key = "name";
     static String user_key = "user";
     static String pass_key = "pass";
 
@@ -53,33 +62,58 @@ public class SignInActicity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.input_username);
         password = (EditText) findViewById(R.id.input_password);
         loginButton = (Button) findViewById(R.id.btn_login);
+        final ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                usrname = username.getText().toString();
-                pass = password.getText().toString();
+                usernameEditText = username.getText().toString();
+                passwordEditText = password.getText().toString();
 
 
-                if (usrname.equals("") || pass.equals("")) {
+                if (usernameEditText.equals("") || passwordEditText.equals("")) {
                     Toast.makeText(SignInActicity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
+                    spinner.setVisibility(View.VISIBLE);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.loginUrl, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
-                            JSONObject login = new JSONObject(response);
-                            /*String loginStatus = login.getString("status");
+                                JSONObject login = new JSONObject(response);
+                                String loginStatus = login.getString("status");
 
-                            if(loginStatus == "fail"){
-                                Toast.makeText(SignInActicity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                            }
+                                if (loginStatus.equals("success")) {
+                                    JSONArray loginArray = login.getJSONArray("user");
+                                    JSONObject c = loginArray.getJSONObject(0);
+                                    String userId = c.getString("id");
+                                    String user_Name = c.getString("name_np");
 
-                            else {
+                                    SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferencesState.edit();
+                                    editor.putString(id_key, userId);
+                                    editor.putString(name_key, user_Name);
+                                    editor.putString(user_key, usernameEditText);
+                                    editor.putString(pass_key, passwordEditText);
+                                    editor.putBoolean("state", true);
+                                    editor.commit();
 
-                            }*/
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    spinner.setVisibility(View.VISIBLE);
+                                    spinner.setVisibility(View.GONE);
+
+                                    Toast.makeText(SignInActicity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    spinner.setVisibility(View.VISIBLE);
+                                    spinner.setVisibility(View.GONE);
+                                    String loginMessage = login.getString("message");
+                                    Toast.makeText(SignInActicity.this, loginMessage, Toast.LENGTH_SHORT).show();
+                                }
 
 
                             } catch (JSONException e) {
@@ -90,25 +124,23 @@ public class SignInActicity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            Toast.makeText(SignInActicity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> myParameters = new HashMap<>();
 
-                }
-                if (usrname.equals("admin") && pass.equals("admin")) {
-                    SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferencesState.edit();
-                    editor.putString(user_key,usrname);
-                    editor.putString(pass_key,pass);
-                    editor.putBoolean("state",true);
-                    editor.commit();
+                            myParameters.put("username", usernameEditText);
+                            myParameters.put("password", passwordEditText);
 
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    Toast.makeText(getApplicationContext(), "Log In Successful", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+                            return myParameters;
+                        }
+                    };
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(stringRequest);
+
                 }
             }
         });

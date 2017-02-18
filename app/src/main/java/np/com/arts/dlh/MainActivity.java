@@ -11,21 +11,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static np.com.arts.dlh.R.id.approvedLetters;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences preferencesState;
+
     Toolbar toolbar;
 
     static String filename="mypreferencefile";
-    static String user_key = "user";
-    static String pass_key = "pass";
+    static String id_key = "id";
+    static String name_key = "name";
 
     //signin state
     static String file = "loginstatefile";
     static String state = "state";
+
+    String userID, user_Name;
 
     CardView assignedLetters;
     CardView approvedLetters;
@@ -45,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
         assignedLetters = (CardView) findViewById(R.id.assignedLetters);
         approvedLetters = (CardView) findViewById(R.id.approvedLetters);
+        TextView userName = (TextView) findViewById(R.id.user_name);
+
+        preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
+        userID = preferencesState.getString(id_key,"");
+        user_Name = preferencesState.getString(name_key,"");
+
+        userName.setText(user_Name);
 
         assignedLetters.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.popup_logout){
-            SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
+            preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferencesState.edit();
             editor.putBoolean("state",false);
             editor.commit();
