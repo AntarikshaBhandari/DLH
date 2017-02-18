@@ -13,7 +13,7 @@ public class ApprovedLetters extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_approved_letters);
+        setContentView(R.layout.assigned_letters_full_content);
 
         toolbar = (Toolbar) findViewById(R.id.id_toolbar_without_logo);
         setSupportActionBar(toolbar);
