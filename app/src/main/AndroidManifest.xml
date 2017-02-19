@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".AssignedLetters" />
-        <activity android:name=".ApprovedLetters"></activity>
+        <activity android:name=".ApprovedLetters"/>
         <activity android:name=".AssignedLetterWithRegistrationNo"/>
         <activity android:name=".AssignedLetterWithoutRegistrationNo"/>
     </application>
