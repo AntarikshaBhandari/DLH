@@ -48,7 +48,8 @@
         <android.support.v7.widget.CardView
             android:id="@+id/assignedLetters"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -78,6 +79,18 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/assignedLetterCount"
+                    android:layout_toRightOf="@+id/assignedLettersLogo"
+                    android:layout_below="@+id/assignedLettersText"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:text="1"
+
+                    android:textSize="17sp"
+                    android:textColor="#ea0e0e"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
 
@@ -86,7 +99,8 @@
         <android.support.v7.widget.CardView
             android:id="@+id/approvedLetters"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
             android:layout_below="@+id/assignedLetters"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

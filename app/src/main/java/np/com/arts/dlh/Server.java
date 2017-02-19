@@ -7,4 +7,5 @@ package np.com.arts.dlh;
 public class Server {
 
     static String loginUrl = "http://lotusdesignnepal.com/demo/dlh/rest/api/login/";
+    static String assignedUrl = "http://lotusdesignnepal.com/demo/dlh/rest/api/assign/";
 }

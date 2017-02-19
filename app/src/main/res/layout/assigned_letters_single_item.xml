@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/singlelistitem_nagarikWadapatra"
@@ -15,11 +16,11 @@
             android:layout_marginLeft="10dp">
 
             <TextView
+                android:id="@+id/assignedByLetter"
                 style="@style/CardViewTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Assigned Letter"
-                android:id="@+id/nagarikWadapatraHeading"/>
+                android:text="Assigned Letter" />
 
         </RelativeLayout>
 

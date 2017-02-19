@@ -1,5 +1,6 @@
 package np.com.arts.dlh;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,7 +47,6 @@ public class SignInActicity extends AppCompatActivity {
     static String pass_key = "pass";
 
     //signin state
-    static String file = "loginstatefile";
     static String state = "state";
 
     @Override
@@ -64,10 +66,15 @@ public class SignInActicity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.input_username);
         password = (EditText) findViewById(R.id.input_password);
         loginButton = (Button) findViewById(R.id.btn_login);
-        final ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-        final RelativeLayout spinnerRL = (RelativeLayout) findViewById(R.id.progressBarRL);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.signIn_Main_LinearLayout);
 
-        spinnerRL.setVisibility(View.GONE);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(linearLayout.getWindowToken(),0);
+            }
+        });
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +84,16 @@ public class SignInActicity extends AppCompatActivity {
                 usernameEditText = username.getText().toString();
                 passwordEditText = password.getText().toString();
 
+                final ProgressDialog progressDialog = new ProgressDialog(SignInActicity.this);
+                progressDialog.setMessage("Logging In......");
+                progressDialog.setCancelable(false);
+
 
                 if (usernameEditText.equals("") || passwordEditText.equals("")) {
+
                     Toast.makeText(SignInActicity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    spinnerRL.setVisibility(View.VISIBLE);
+                    progressDialog.show();
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.loginUrl, new Response.Listener<String>() {
                         @Override
@@ -110,15 +121,11 @@ public class SignInActicity extends AppCompatActivity {
                                     startActivity(i);
                                     finish();
 
-                                    spinnerRL.setVisibility(View.VISIBLE);
-                                    spinnerRL.setVisibility(View.GONE);
-
+                                    progressDialog.dismiss();
                                     Toast.makeText(SignInActicity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                 } else {
-                                    spinnerRL.setVisibility(View.VISIBLE);
-                                    spinnerRL.setVisibility(View.GONE);
-
+                                    progressDialog.dismiss();
                                     String loginMessage = login.getString("message");
                                     Toast.makeText(SignInActicity.this, loginMessage, Toast.LENGTH_SHORT).show();
                                 }
@@ -132,8 +139,7 @@ public class SignInActicity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            spinnerRL.setVisibility(View.VISIBLE);
-                            spinnerRL.setVisibility(View.GONE);
+                            progressDialog.dismiss();
                             Toast.makeText(SignInActicity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }) {
