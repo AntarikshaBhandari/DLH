@@ -3,6 +3,7 @@ package np.com.arts.dlh;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +65,9 @@ public class SignInActicity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.input_password);
         loginButton = (Button) findViewById(R.id.btn_login);
         final ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
+        final RelativeLayout spinnerRL = (RelativeLayout) findViewById(R.id.progressBarRL);
+
+        spinnerRL.setVisibility(View.GONE);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +81,9 @@ public class SignInActicity extends AppCompatActivity {
                 if (usernameEditText.equals("") || passwordEditText.equals("")) {
                     Toast.makeText(SignInActicity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
-                    spinner.setVisibility(View.VISIBLE);
+
+                    spinnerRL.setVisibility(View.VISIBLE);
+
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.loginUrl, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -103,14 +109,16 @@ public class SignInActicity extends AppCompatActivity {
                                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(i);
                                     finish();
-                                    spinner.setVisibility(View.VISIBLE);
-                                    spinner.setVisibility(View.GONE);
+
+                                    spinnerRL.setVisibility(View.VISIBLE);
+                                    spinnerRL.setVisibility(View.GONE);
 
                                     Toast.makeText(SignInActicity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                 } else {
-                                    spinner.setVisibility(View.VISIBLE);
-                                    spinner.setVisibility(View.GONE);
+                                    spinnerRL.setVisibility(View.VISIBLE);
+                                    spinnerRL.setVisibility(View.GONE);
+
                                     String loginMessage = login.getString("message");
                                     Toast.makeText(SignInActicity.this, loginMessage, Toast.LENGTH_SHORT).show();
                                 }
@@ -124,6 +132,8 @@ public class SignInActicity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            spinnerRL.setVisibility(View.VISIBLE);
+                            spinnerRL.setVisibility(View.GONE);
                             Toast.makeText(SignInActicity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }) {
