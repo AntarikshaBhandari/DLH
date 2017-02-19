@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     String currentPasswordValue = currentPassword.getText().toString().trim();
                     String newPasswordValue = newPassword.getText().toString().trim();
                     String confirmNewPasswordValue = confirmNewPassword.getText().toString().trim();
-
+                    //Toast.makeText(MainActivity.this, confirmNewPasswordValue, Toast.LENGTH_SHORT).show();
                     if (currentPasswordValue.equals("") || newPasswordValue.equals("") || confirmNewPasswordValue.equals("")) {
                         Toast.makeText(MainActivity.this, "All Fields are Required.", Toast.LENGTH_SHORT).show();
                     } else {
