@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_design"
+                android:background="@drawable/disabled_edit_text_design"
                 android:editable="false" />
 
             <TextView
@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_design"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/disabled_edit_text_design"
                 android:editable="false" />
 
             <TextView
@@ -72,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_design"
+                android:background="@drawable/disabled_edit_text_design"
                 android:editable="false" />
 
             <TextView
@@ -88,9 +89,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_design"
-                android:minLines="4"
+                android:minLines="4" />
 
-                />
+            <LinearLayout
+                android:id="@+id/ccLayout_with_registration_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="बोधार्थ" />
+
+                <EditText
+                    android:id="@+id/lettersCC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/disabled_edit_text_design"
+                    android:editable="false"
+                    android:minLines="1" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

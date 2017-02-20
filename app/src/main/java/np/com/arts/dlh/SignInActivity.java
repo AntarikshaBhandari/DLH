@@ -4,18 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,7 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignInActicity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     EditText username, password;
     String usernameEditText, passwordEditText;
@@ -59,8 +54,9 @@ public class SignInActicity extends AppCompatActivity {
 
         if (logic == true) {
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
-            finish();
+//            finish();
         }
 
         username = (EditText) findViewById(R.id.input_username);
@@ -84,14 +80,14 @@ public class SignInActicity extends AppCompatActivity {
                 usernameEditText = username.getText().toString();
                 passwordEditText = password.getText().toString();
 
-                final ProgressDialog progressDialog = new ProgressDialog(SignInActicity.this);
+                final ProgressDialog progressDialog = new ProgressDialog(SignInActivity.this);
                 progressDialog.setMessage("Logging In......");
                 progressDialog.setCancelable(false);
 
 
                 if (usernameEditText.equals("") || passwordEditText.equals("")) {
 
-                    Toast.makeText(SignInActicity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "All Fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.show();
 
@@ -118,16 +114,17 @@ public class SignInActicity extends AppCompatActivity {
                                     editor.commit();
 
                                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);
-                                    finish();
+//                                    finish();
 
                                     progressDialog.dismiss();
-                                    Toast.makeText(SignInActicity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     progressDialog.dismiss();
                                     String loginMessage = login.getString("message");
-                                    Toast.makeText(SignInActicity.this, loginMessage, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, loginMessage, Toast.LENGTH_SHORT).show();
                                 }
 
 
@@ -140,7 +137,7 @@ public class SignInActicity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             progressDialog.dismiss();
-                            Toast.makeText(SignInActicity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }) {
                         @Override

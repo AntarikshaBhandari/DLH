@@ -1,15 +1,15 @@
 package np.com.arts.dlh;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,10 +29,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import static np.com.arts.dlh.R.id.approvedLetters;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         assignedLetterCount = (TextView) findViewById(R.id.assignedLetterCount);
+        assignedLetterCount.setVisibility(TextView.GONE);
         toolbar = (Toolbar) findViewById(R.id.toolbar_mainactivity);
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("DLH");
@@ -73,11 +70,20 @@ public class MainActivity extends AppCompatActivity {
         approvedLetters = (CardView) findViewById(R.id.approvedLetters);
         TextView userName = (TextView) findViewById(R.id.user_name);
 
+        final View snackBarPosition = findViewById(R.id.activity_main);
+
         preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
         userID = preferencesState.getString(id_key, "");
         user_Name = preferencesState.getString(name_key, "");
 
         userName.setText(user_Name);
+
+//        Toast.makeText(this, userID, Toast.LENGTH_SHORT).show();
+
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Loading");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         assignedLetters.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
                     if (status.equals("success")) {
                         JSONArray assignments = obj.getJSONArray("assignments");
+                        progressDialog.dismiss();
                         //Toast.makeText(MainActivity.this, "assignments" + assignments.length(), Toast.LENGTH_SHORT).show();
                         String length = String.valueOf(assignments.length());
-                        assignedLetterCount.setText(length);
+                        if(assignments.length()>0){
+                            assignedLetterCount.setVisibility(TextView.VISIBLE);
+                            assignedLetterCount.setText(length);
+                        }
 
                     } else {
-                        Toast.makeText(MainActivity.this, "m", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+//                        Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -117,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressDialog.dismiss();
+                Snackbar.make(snackBarPosition,"No Internet Connection",Snackbar.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -137,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.popup_changePassword) {
             final Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.change_password);
+            dialog.setTitle("Change Password");
             dialog.show();
 
             final EditText currentPassword = (EditText) dialog.findViewById(R.id.current_Password);
@@ -170,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.commit();
                             dialog.dismiss();
 
-                            startActivity(new Intent(getApplicationContext(), SignInActicity.class));
+                            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                             finish();
                         } else {
                             Toast.makeText(MainActivity.this, "Password doesn't match each other", Toast.LENGTH_SHORT).show();
@@ -186,8 +199,9 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("state", false);
             editor.commit();
 
-            startActivity(new Intent(getApplicationContext(), SignInActicity.class));
-            finish();
+            Intent i = new Intent(getApplicationContext(), SignInActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         }
 
 

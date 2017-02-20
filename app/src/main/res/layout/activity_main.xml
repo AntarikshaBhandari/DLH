@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="Welcome,"
-                android:textColor="#000"
+                android:textColor="#e23326"
                 android:textSize="20sp" />
 
             <TextView
@@ -38,8 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="admin"
-                android:textColor="#a31010"
+                android:textColor="#357b0d"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -49,11 +48,11 @@
             android:id="@+id/assignedLetters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:minHeight="100dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -64,33 +63,38 @@
 
                 <ImageView
                     android:id="@+id/assignedLettersLogo"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/assignedletters" />
 
                 <TextView
                     android:id="@+id/assignedLettersText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_toRightOf="@+id/assignedLettersLogo"
                     android:padding="10dp"
                     android:text="Assigned Letters"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/assignedLetterCount"
-                    android:layout_toRightOf="@+id/assignedLettersLogo"
-                    android:layout_below="@+id/assignedLettersText"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:text="1"
-
-                    android:textSize="17sp"
-                    android:textColor="#ea0e0e"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/assignedLettersText"
+                    android:text=""
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#ea0e0e"
+                    android:textColor="#fff"
+                    android:textSize="17sp" />
 
             </RelativeLayout>
 
@@ -100,11 +104,11 @@
             android:id="@+id/approvedLetters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="10dp"
             android:layout_below="@+id/assignedLetters"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:minHeight="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -115,20 +119,21 @@
 
                 <ImageView
                     android:id="@+id/approvedLettersLogo"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/letters" />
 
                 <TextView
                     android:id="@+id/approvedLettersText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_toRightOf="@+id/approvedLettersLogo"
                     android:padding="10dp"
                     android:text="Approved Letters"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -139,21 +144,21 @@
     </LinearLayout>
 
     <TextView
-        android:layout_above="@+id/appBy"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_above="@+id/appBy"
         android:layout_marginBottom="10dp"
-        android:background="#d4d2d2"/>
+        android:background="#d4d2d2" />
 
     <TextView
         android:id="@+id/appBy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="App By: ARTS"
-        android:gravity="center"
-        android:textColor="#9c9a9a"
-        android:textSize="16sp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="App By: ARTS"
+        android:textColor="#838181"
+        android:textSize="16sp" />
 
 </RelativeLayout>
