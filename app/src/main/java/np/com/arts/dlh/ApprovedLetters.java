@@ -73,18 +73,18 @@ public class ApprovedLetters extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject obj = new JSONObject(response);
-                        for (int i = 0; i < 1; i++) {
+                    JSONArray approvedLetters = new JSONArray(response);
+                        for (int i = 0; i < approvedLetters.length(); i++) {
                             Module module = new Module();
-                            JSONObject c = obj.getJSONObject(String.valueOf(i));
+                            JSONObject c = approvedLetters.getJSONObject(i);
                             String letter_id = c.getString("id").trim();
-                            String letter_subject = c.getString("subject_id").trim();
-                            Toast.makeText(ApprovedLetters.this, letter_id, Toast.LENGTH_SHORT).show();
+                            String letter_subject = c.getString("subject").trim();
+//                            Toast.makeText(ApprovedLetters.this, letter_id, Toast.LENGTH_SHORT).show();
 
                             progressDialog.dismiss();
 //                            Toast.makeText(AssignedLetters.this, letter_id, Toast.LENGTH_SHORT).show();
 
-                            if(i == 0){
+                            if(approvedLetters.length() == 0){
                                 Snackbar.make(snackBarPosition,"No Letters Found",Snackbar.LENGTH_SHORT).show();
                             }
 

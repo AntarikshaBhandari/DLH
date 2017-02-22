@@ -102,7 +102,14 @@ public class SignInActivity extends AppCompatActivity {
                                     JSONArray loginArray = login.getJSONArray("user");
                                     JSONObject c = loginArray.getJSONObject(0);
                                     String userId = c.getString("id");
-                                    String user_Name = c.getString("name_np");
+                                    String user_Name_np = c.getString("name_np");
+                                    String user_Name_en = c.getString("name_en");
+
+                                    String user_Name = user_Name_np;
+
+                                    if(user_Name_np.equals("") || user_Name_np.equals("null")){
+                                        user_Name = user_Name_en;
+                                    }
 
                                     SharedPreferences preferencesState = getSharedPreferences(filename, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferencesState.edit();
@@ -113,12 +120,13 @@ public class SignInActivity extends AppCompatActivity {
                                     editor.putBoolean("state", true);
                                     editor.commit();
 
+
+                                    progressDialog.dismiss();
                                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);
 //                                    finish();
 
-                                    progressDialog.dismiss();
                                     Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                 } else {

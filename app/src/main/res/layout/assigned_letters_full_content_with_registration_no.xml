@@ -11,9 +11,12 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/withRegistrationNo_LinearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <TextView
@@ -43,9 +46,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimary"
                 android:background="@drawable/disabled_edit_text_design"
-                android:editable="false" />
+                android:editable="false"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 style="@style/FormTextView"
